@@ -36,8 +36,8 @@ const Footer = () => {
       </div>
 
       {/* Footer Columns */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-10 text-sm sm:text-base">
-        {/* TEAM */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-10 text-sm sm:text-base">
+      {/* TEAM */}
         <div>
           <h2 className="font-semibold mb-4 text-[#FFFFFF]">TEAM</h2>
           <ul className="space-y-1 text-gray-400">
