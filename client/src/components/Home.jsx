@@ -18,7 +18,9 @@ const teams = [
 
 const HomePage = () => {
   return (
-    <div className="min-h-screen bg-cover bg-center bg-no-repeat" style={{ backgroundImage: 'url("/ipl.jpg")' }}>
+<div
+  className="min-h-screen bg-cover bg-center bg-no-repeat"
+  style={{ backgroundImage: "url('https://wallpapercave.com/wp/wp9536040.jpg')" }}>
       {/* Navbar */}
       <Navbar/>
 
