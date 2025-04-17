@@ -120,7 +120,7 @@ const playersData = {
   batter: [
     {
       name: "Virat Kohli",
-      img: "https://tse2.mm.bing.net/th/id/OIP.4z2feTp_Mw25d-lmn1wMdQHaJI?rs=1&pid=ImgDetMain",
+      img: "https://documents.iplt20.com/ipl/IPLHeadshot2025/57.png",
       role: "Top-order Batter",
     },
     {
@@ -292,60 +292,66 @@ const TeamSelector = () => {
       </div>
 
       {/* Player Cards Section */}
-      {/* Player Cards Section */}
-<div className="mt-8 bg-white ">
+      <div className="mt-8 bg-white px-4 sm:px-10 py-8">
 
-  {/* Batter Cards */}
-  <div className="mb-6 p-5">
-    <h1 className="text-2xl text-black font-bold mb-2">Batter</h1>
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-      {playersData.batter.map((player) => (
-        <div
-          key={player.name}
-          className="p-4 bg-white border border-black rounded-md text-center"
-        >
-          <img src={player.img} alt={player.name} className="h-20 w-20 mx-auto" />
-          <h4 className="mt-2 text-lg text-black">{player.name}</h4>
-          <p className="text-sm text-gray-900">{player.role}</p>
-        </div>
-      ))}
-    </div>
-  </div>
-
-  {/* Bowler Cards */}
-  <div className="mb-6 p-5">
-    <h1 className="text-2xl text-black font-bold mb-2">Bowler</h1>
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-      {playersData.bowler.map((player) => (
-        <div
-          key={player.name}
-          className="p-4 bg-white border border-black rounded-md text-center"
-        >
-          <img src={player.img} alt={player.name} className="h-20 w-20 mx-auto" />
-          <h4 className="mt-2 text-lg text-black">{player.name}</h4>
-          <p className="text-sm text-gray-900">{player.role}</p>
-        </div>
-      ))}
-    </div>
-  </div>
-
-  {/* All-rounder Cards */}
-  <div className="mb-6 p-5">
-    <h1 className="text-2xl text-black font-bold mb-2">All-rounder</h1>
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-      {playersData.allRounder.map((player) => (
-        <div
-          key={player.name}
-          className="p-4 bg-white border border-black rounded-md text-center"
-        >
-          <img src={player.img} alt={player.name} className="h-20 w-20 mx-auto" />
-          <h4 className="mt-2 text-lg text-black">{player.name}</h4>
-          <p className="text-sm text-gray-900">{player.role}</p>
-        </div>
-      ))}
-    </div>
+{/* Batter Section */}
+<div className="mb-10">
+  <h2 className="text-3xl font-bold text-black mb-6  inline-block">
+     Batters
+  </h2>
+  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+    {playersData.batter.map((player) => (
+      <div
+        key={player.name}
+        className="bg-gray-50 border border-gray-200 rounded-xl p-4 shadow-md hover:shadow-xl transition-shadow duration-300 text-center"
+      >
+        <img src={player.img} alt={player.name} className="h-24 w-24 rounded-full object-cover mx-auto mb-3" />
+        <h4 className="text-lg font-semibold text-gray-800">{player.name}</h4>
+        <p className="text-sm text-gray-500">{player.role}</p>
+      </div>
+    ))}
   </div>
 </div>
+
+{/* Bowler Section */}
+<div className="mb-10">
+  <h2 className="text-3xl font-bold text-black inline-block">
+     Bowlers
+  </h2>
+  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+    {playersData.bowler.map((player) => (
+      <div
+        key={player.name}
+        className="bg-gray-50 border border-gray-200 rounded-xl p-4 shadow-md hover:shadow-xl transition-shadow duration-300 text-center"
+      >
+        <img src={player.img} alt={player.name} className="h-24 w-24 rounded-full object-cover mx-auto mb-3" />
+        <h4 className="text-lg font-semibold text-gray-800">{player.name}</h4>
+        <p className="text-sm text-gray-500">{player.role}</p>
+      </div>
+    ))}
+  </div>
+</div>
+
+{/* All-rounder Section */}
+<div>
+  <h2 className="text-3xl font-bold text-black inline-block">
+     All-rounders
+  </h2>
+  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+    {playersData.allRounder.map((player) => (
+      <div
+        key={player.name}
+        className="bg-gray-50 border border-gray-200 rounded-xl p-4 shadow-md hover:shadow-xl transition-shadow duration-300 text-center"
+      >
+        <img src={player.img} alt={player.name} className="h-24 w-24 rounded-full object-cover mx-auto mb-3" />
+        <h4 className="text-lg font-semibold text-gray-800">{player.name}</h4>
+        <p className="text-sm text-gray-500">{player.role}</p>
+      </div>
+    ))}
+  </div>
+</div>
+</div>
+
 
     </div>
     <Footer />
