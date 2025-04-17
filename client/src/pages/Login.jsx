@@ -3,17 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
-
-  // Optional: Local state to manage form values
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = (e) => {
     e.preventDefault();
 
-    // Simulate login logic (replace with real API call)
     if (username === "admin" && password === "1234") {
-      // Redirect to /home after successful login
       navigate("/home");
     } else {
       alert("Invalid username or password");
@@ -21,18 +17,18 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
+    <div className="h-screen w-screen flex flex-col md:flex-row overflow-hidden">
       {/* Left Side Image */}
-      <div className="md:w-1/2 w-full h-64 md:h-auto">
+      <div className="md:w-1/2 w-full h-1/3 md:h-full">
         <img
-          src="someimage.jpg"
+          src="ipl.jpg"
           alt="IPL Players"
           className="w-full h-full object-cover"
         />
       </div>
 
       {/* Right Side Form */}
-      <div className="md:w-1/2 w-full bg-gray-900 text-white flex items-center justify-center p-8">
+      <div className="md:w-1/2 w-full bg-gray-900 text-white flex items-center justify-center p-4 md:p-8 h-2/3 md:h-full">
         <div className="w-full max-w-md">
           <h2 className="text-3xl font-bold mb-6 text-center">IPL Manager</h2>
 
