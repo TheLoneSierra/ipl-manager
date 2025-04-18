@@ -12,8 +12,8 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/home" element={<HomePage />} />
-        <Route path="/teams/:teamId" element={<TeamSelector />} />
-        <Route path="/teams/:teamId" element={<TeamDetails />} />
+        <Route path="/teams/:teamId" element={<TeamSelector />} /> {/* if you need this */}
+        <Route path="/team-selector" element={<TeamDetails />} />
       </Routes>
     </Router>
   );

@@ -1,24 +1,42 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-
-    if (username === "admin" && password === "1234") {
+    try {
+      const res = await axios.post("http://localhost:5000/api/login", {
+        email,
+        password,
+      });
+      alert("Login successful");
       navigate("/home");
-    } else {
-      alert("Invalid username or password");
+    } catch (err) {
+      alert(err.response?.data?.message || "Login failed");
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    const emailPrompt = prompt("Enter your email to receive reset link:");
+    if (!emailPrompt) return;
+
+    try {
+      await axios.post("http://localhost:5000/api/forgot-password", {
+        email: emailPrompt,
+      });
+      alert("Reset link sent to your email");
+    } catch (err) {
+      alert(err.response?.data?.message || "Error sending reset email");
     }
   };
 
   return (
     <div className="h-screen w-screen flex flex-col md:flex-row overflow-hidden">
-      {/* Left Side Image */}
       <div className="md:w-1/2 w-full h-1/3 md:h-full">
         <img
           src="ipl.jpg"
@@ -27,48 +45,49 @@ const Login = () => {
         />
       </div>
 
-      {/* Right Side Form */}
       <div className="md:w-1/2 w-full bg-gray-900 text-white flex items-center justify-center p-4 md:p-8 h-2/3 md:h-full">
         <div className="w-full max-w-md">
           <h2 className="text-3xl font-bold mb-6 text-center">IPL Manager</h2>
 
           <form className="space-y-4" onSubmit={handleLogin}>
-            <div>
-              <input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-4 py-2 rounded border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-gray-500"
-              />
-            </div>
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-2 rounded border border-gray-700 text-white"
+              required
+            />
 
-            <div>
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 rounded border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-gray-500"
-              />
-            </div>
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-2 rounded border border-gray-700 text-white"
+              required
+            />
 
             <div className="flex justify-end text-sm">
-              <a href="#" className="text-gray-400 hover:text-white">
+              <button
+                type="button"
+                onClick={handleForgotPassword}
+                className="text-gray-400 hover:text-white"
+              >
                 Forgot Password?
-              </a>
+              </button>
             </div>
 
             <button
               type="submit"
-              className="w-full py-2 rounded-full bg-red-600 hover:bg-red-700 transition-colors duration-300 font-semibold"
+              className="w-full py-2 rounded-full bg-red-600 hover:bg-red-700 font-semibold"
             >
               Login
             </button>
 
             <button
               type="button"
-              className="w-full py-2 rounded-full bg-white text-gray-900 hover:bg-gray-200 transition-colors duration-300 font-semibold"
+              className="w-full py-2 rounded-full bg-white text-gray-900 hover:bg-gray-200 font-semibold"
             >
               Login with Google
             </button>
