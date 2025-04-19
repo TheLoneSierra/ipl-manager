@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { GoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -10,10 +11,13 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/login", {
-        email,
-        password,
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_REACT_APP_BASE_ENDPOINT}/api/login`,
+        {
+          email,
+          password,
+        }
+      );
       alert("Login successful");
       navigate("/home");
     } catch (err) {
@@ -26,12 +30,42 @@ const Login = () => {
     if (!emailPrompt) return;
 
     try {
-      await axios.post("http://localhost:5000/api/forgot-password", {
-        email: emailPrompt,
-      });
+      await axios.post(
+        `${import.meta.env.VITE_REACT_APP_BASE_ENDPOINT}/api/forgot-password`,
+        {
+          email: emailPrompt,
+        }
+      );
       alert("Reset link sent to your email");
     } catch (err) {
       alert(err.response?.data?.message || "Error sending reset email");
+    }
+  };
+
+  // Google login
+  const handleGoogleLoginSuccess = async (credentialResponse) => {
+    try {
+      const { credential } = credentialResponse;
+
+      // Send the ID token to the backend for verification
+      const res = await axios.post(
+        `${import.meta.env.VITE_REACT_APP_BASE_ENDPOINT}/api/google/login`,
+        {
+          credential, // Send the ID token to verify
+        }
+      );
+
+      if (res.data?.token) {
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+        alert("Google signin successful");
+        navigate("/home");
+      } else {
+        alert("Signup failed: Token not returned");
+      }
+    } catch (error) {
+      alert("Google login failed");
+      console.error("Google login error:", error);
     }
   };
 
@@ -85,12 +119,17 @@ const Login = () => {
               Login
             </button>
 
-            <button
-              type="button"
-              className="w-full py-2 rounded-full bg-white text-gray-900 hover:bg-gray-200 font-semibold"
-            >
-              Login with Google
-            </button>
+            {/* Google Login Button */}
+            <div className="flex justify-center">
+              <GoogleLogin
+                onSuccess={handleGoogleLoginSuccess}
+                onError={() => alert("Google login failed")}
+                shape="pill"
+                theme="filled_blue"
+                useOneTap
+                use_fedcm_for_prompt={false}
+              />
+            </div>
 
             <div className="text-center text-sm">
               New User?{" "}

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate, Link } from "react-router-dom";
 
 const Signup = () => {
@@ -24,16 +25,46 @@ const Signup = () => {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/register", {
-        name,
-        email,
-        password,
-      });
+      await axios.post(
+        `${import.meta.env.VITE_REACT_APP_BASE_ENDPOINT}/api/register`,
+        {
+          name,
+          email,
+          password,
+        }
+      );
       alert("Signup successful");
-      navigate("/");
+      navigate("/home");
     } catch (err) {
       alert(err.response?.data?.message || "Signup failed");
     }
+  };
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      const { credential } = credentialResponse;
+      const res = await axios.post(
+        `${import.meta.env.VITE_REACT_APP_BASE_ENDPOINT}/api/google/login`,
+        {
+          credential,
+        }
+      );
+
+      if (res.data?.token) {
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+        navigate("/home");
+      } else {
+        alert("Signup failed: Token not returned");
+      }
+    } catch (error) {
+      alert("Google signup failed");
+      console.error(error);
+    }
+  };
+
+  const handleGoogleFailure = () => {
+    alert("Google Sign-in failed");
   };
 
   return (
@@ -96,12 +127,16 @@ const Signup = () => {
               Signup
             </button>
 
-            <button
-              type="button"
-              className="w-full py-2 rounded-full bg-white text-gray-900 hover:bg-gray-200 font-semibold"
-            >
-              Signup with Google
-            </button>
+            <div className="flex justify-center">
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={handleGoogleFailure}
+                shape="pill"
+                theme="filled_blue"
+                useOneTap
+                use_fedcm_for_prompt={false}
+              />
+            </div>
 
             <div className="text-center text-sm">
               Already have an account?{" "}

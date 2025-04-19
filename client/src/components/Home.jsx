@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import Footer from './Footer';
-import Navbar from './Navbar';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import Footer from "./Footer";
+import Navbar from "./Navbar";
 
 const HomePage = () => {
   const [teams, setTeams] = useState([]);
@@ -10,8 +10,10 @@ const HomePage = () => {
   useEffect(() => {
     const fetchTeams = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/teams'); 
-        setTeams(res.data); 
+        const res = await axios.get(
+          `${import.meta.env.VITE_REACT_APP_BASE_ENDPOINT}/api/teams`
+        );
+        setTeams(res.data);
       } catch (err) {
         console.error("Error fetching teams:", err);
       }
@@ -23,7 +25,9 @@ const HomePage = () => {
   return (
     <div
       className="min-h-screen bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: "url('https://wallpapercave.com/wp/wp9536040.jpg')" }}
+      style={{
+        backgroundImage: "url('https://wallpapercave.com/wp/wp9536040.jpg')",
+      }}
     >
       <Navbar />
 
@@ -41,14 +45,16 @@ const HomePage = () => {
         {teams.map((team, index) => (
           <Link
             key={index}
-            to={`/teams/${team.team_name.replace(/\s+/g, '-').toLowerCase()}`}
+            to={`/teams/${team.team_name.replace(/\s+/g, "-").toLowerCase()}`}
             className="bg-blue-950 bg-opacity-10 rounded-lg shadow-lg p-6 flex flex-col items-center justify-center hover:bg-opacity-20 transition-all"
           >
             <div
               className="w-30 h-40 bg-cover bg-center rounded-md mb-3"
               style={{ backgroundImage: `url(${team.logo})` }}
             ></div>
-            <h2 className="text-white font-bold text-center text-xl">{team.team_name}</h2>
+            <h2 className="text-white font-bold text-center text-xl">
+              {team.team_name}
+            </h2>
           </Link>
         ))}
       </div>
